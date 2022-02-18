@@ -1,3 +1,4 @@
+import InvalidDataError from "@/errors/InvalidDataError";
 import { Request, Response, NextFunction } from "express";
 import httpStatus from "http-status";
 
@@ -8,6 +9,12 @@ export default function errorHandlingMiddleware(
   res: Response,
   _next: NextFunction
 ) {
+  if (err instanceof InvalidDataError) {
+    return res.status(httpStatus.UNPROCESSABLE_ENTITY).send({
+      message: err.message,
+      details: err.details,
+    });
+  }
   /* eslint-disable-next-line no-console */
   console.error(err);
   res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
