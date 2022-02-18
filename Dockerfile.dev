@@ -1,0 +1,6 @@
+FROM node:16
+WORKDIR /usr/src/pagaLeve-challenge
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+CMD npm run dev
