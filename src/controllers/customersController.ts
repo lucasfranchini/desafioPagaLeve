@@ -16,3 +16,8 @@ export async function createNewCustomer(req: Request, res: Response) {
   const registeredId = await customersService.createNewCustomer(newCustomer);
   res.status(httpStatus.CREATED).send(registeredId);
 }
+
+export async function getCustomers(req: Request, res: Response) {
+  const customers = await customersService.getCustomers();
+  res.send(customers);
+}
