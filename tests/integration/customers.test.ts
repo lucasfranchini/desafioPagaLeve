@@ -128,3 +128,34 @@ describe("GET /customers/:id", () => {
     expect(res.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
   });
 });
+
+describe("POST /customers/search", () => {
+  it("should return an array containing all the customers that contains the search text", async () => {
+    const customer = await createCustomerInDatabase();
+    const res = await agent.post("/customers/search").send({
+      searchText: customer.firstName,
+    });
+    expect({
+      ...res.body[0],
+      birthday: new Date(res.body[0].birthday),
+    }).toMatchObject({
+      ...customer,
+      id: expect.any(String),
+    });
+  });
+  it("should return an array containing only the customers that contains the search text", async () => {
+    const customer = await createCustomerInDatabase();
+    const customerNotSearched = await createCustomerInDatabase();
+    const res = await agent.post("/customers/search").send({
+      searchText: customer.firstName,
+    });
+    expect(res.body.length).toBe(1);
+  });
+
+  it("should return status 422 for invalid params", async () => {
+    const res = await agent.post("/customers").send({
+      searchText: 955,
+    });
+    expect(res.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
+  });
+});
