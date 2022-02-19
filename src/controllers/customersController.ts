@@ -4,6 +4,7 @@ import newCustomerSchema from "@/schemas/newCustomerSchema";
 import httpStatus from "http-status";
 import * as customersService from "@/services/customersService";
 import { isValidObjectId } from "mongoose";
+import updateCustomerSchema from "@/schemas/updateCustomerSchema";
 
 export async function createNewCustomer(req: Request, res: Response) {
   const newCustomer = req.body;
@@ -40,5 +41,22 @@ export async function deleteCustomer(req: Request, res: Response) {
     ]);
   }
   await customersService.deleteCustomer(id);
+  res.sendStatus(httpStatus.OK);
+}
+export async function updateCustomer(req: Request, res: Response) {
+  const { id, updateContent } = req.params;
+  const validation = updateCustomerSchema.validate(updateContent);
+  if (!isValidObjectId(id)) {
+    throw new InvalidDataError("id", [
+      " id passed in must be a string of 12 bytes or a string of 24 hex characters",
+    ]);
+  }
+  if (!!validation.error) {
+    throw new InvalidDataError(
+      "body",
+      validation.error.details.map((error) => error.message)
+    );
+  }
+  await customersService.updateCustomer(id, updateContent);
   res.sendStatus(httpStatus.OK);
 }
