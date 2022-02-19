@@ -61,3 +61,11 @@ export async function updateCustomer(req: Request, res: Response) {
   await customersService.updateCustomer(id, updateContent);
   res.sendStatus(httpStatus.OK);
 }
+export async function searchCustomers(req: Request, res: Response) {
+  const { searchText } = req.body;
+  if (typeof searchText !== "string") {
+    throw new InvalidDataError("body", ["search text must be a string"]);
+  }
+  const customers = await customersService.searchCustomers(searchText);
+  res.send(customers);
+}
