@@ -55,3 +55,20 @@ describe("POST /customers", () => {
     expect(res.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
   });
 });
+
+describe("DELETE /customers/:id", () => {
+  it("should return status 200 for valid id", async () => {
+    const customer = await createCustomerInDatabase();
+    const res = await agent.delete(`/customers/${customer.id}`);
+    expect(res.status).toBe(httpStatus.OK);
+  });
+
+  it("should return status 422 for invalid params", async () => {
+    const res = await agent.delete("/customers/invalid");
+    expect(res.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
+  });
+  it("should return status 404 for not registered id", async () => {
+    const res = await agent.delete("/customers/6208405cc5ed489059e28f91");
+    expect(res.status).toBe(httpStatus.NOT_FOUND);
+  });
+});
