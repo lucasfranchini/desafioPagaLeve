@@ -1,4 +1,5 @@
 import IdNotFoundError from "@/errors/idNotFoundError";
+import { UpdateCustomerInterface } from "@/interfaces/updateCustomerInterface";
 import { CustomerInterface, Customers } from "@/models/customers";
 
 export async function createNewCustomer(newCustomer: CustomerInterface) {
@@ -19,6 +20,19 @@ export async function getCustomer(id: String) {
 export async function deleteCustomer(id: String) {
   const { deletedCount } = await Customers.deleteOne({ _id: id });
   if (deletedCount === 0) {
+    throw new IdNotFoundError(id);
+  }
+}
+
+export async function updateCustomer(
+  id: String,
+  updateContent: UpdateCustomerInterface
+) {
+  const { modifiedCount } = await Customers.updateOne(
+    { _id: id },
+    updateContent
+  );
+  if (modifiedCount === 0) {
     throw new IdNotFoundError(id);
   }
 }
