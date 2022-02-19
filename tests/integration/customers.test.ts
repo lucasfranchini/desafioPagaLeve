@@ -48,7 +48,6 @@ describe("POST /customers", () => {
   it("should return an onbject containing all the customer data for valid params", async () => {
     const customer = createCustomerObject();
     const res = await agent.post("/customers").send(customer);
-    console.log(`${customer.birthday}`);
     expect({
       ...res.body,
       birthday: new Date(res.body.birthday),
@@ -79,6 +78,39 @@ describe("DELETE /customers/:id", () => {
   });
   it("should return status 404 for not registered id", async () => {
     const res = await agent.delete("/customers/6208405cc5ed489059e28f91");
+    expect(res.status).toBe(httpStatus.NOT_FOUND);
+  });
+});
+
+describe("PUT /customers/:id", () => {
+  it("should return status 200 for valid id", async () => {
+    const customer = await createCustomerInDatabase();
+    const updatedCustomer = createCustomerObject();
+    const res = await agent
+      .put(`/customers/${customer.id}`)
+      .send(updatedCustomer);
+    expect(res.status).toBe(httpStatus.OK);
+  });
+
+  it("should return status 422 for invalid id", async () => {
+    const customer = createCustomerObject();
+    const res = await agent.delete("/customers/invalid").send(customer);
+    expect(res.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
+  });
+  it("should return status 422 for invalid update data", async () => {
+    const customer = createCustomerObject();
+    customer.email = "invalid";
+    console.log(customer);
+    const res = await agent
+      .put("/customers/6208405cc5ed489059e28f91")
+      .send(customer);
+    expect(res.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
+  });
+  it("should return status 404 for not registered id", async () => {
+    const customer = createCustomerObject();
+    const res = await agent
+      .delete("/customers/6208405cc5ed489059e28f91")
+      .send(customer);
     expect(res.status).toBe(httpStatus.NOT_FOUND);
   });
 });
