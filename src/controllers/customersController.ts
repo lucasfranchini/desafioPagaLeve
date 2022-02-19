@@ -32,3 +32,13 @@ export async function getCustomer(req: Request, res: Response) {
   const customer = await customersService.getCustomer(id);
   res.send(customer);
 }
+export async function deleteCustomer(req: Request, res: Response) {
+  const { id } = req.params;
+  if (!isValidObjectId(id)) {
+    throw new InvalidDataError("id", [
+      " id passed in must be a string of 12 bytes or a string of 24 hex characters",
+    ]);
+  }
+  await customersService.deleteCustomer(id);
+  res.sendStatus(httpStatus.OK);
+}

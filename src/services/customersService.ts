@@ -16,3 +16,9 @@ export async function getCustomer(id: String) {
   }
   return customer;
 }
+export async function deleteCustomer(id: String) {
+  const { deletedCount } = await Customers.deleteOne({ _id: id });
+  if (deletedCount === 0) {
+    throw new IdNotFoundError(id);
+  }
+}
