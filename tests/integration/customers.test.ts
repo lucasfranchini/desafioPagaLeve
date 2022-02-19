@@ -114,3 +114,17 @@ describe("PUT /customers/:id", () => {
     expect(res.status).toBe(httpStatus.NOT_FOUND);
   });
 });
+describe("GET /customers/:id", () => {
+  it("should return contain the customer searched", async () => {
+    const customer = await createCustomerInDatabase();
+    const res = await agent.get(`/customers/${customer.id}`);
+    expect({
+      ...res.body,
+      birthday: new Date(res.body.birthday),
+    }).toMatchObject(customer);
+  });
+  it("should return status 422 for invalid id", async () => {
+    const res = await agent.get("/customers/invalid");
+    expect(res.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
+  });
+});
