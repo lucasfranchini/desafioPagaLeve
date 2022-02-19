@@ -1,4 +1,4 @@
-name: Deploy main branch
+name: Deploy main branch serverless
 
 on:
   push:
