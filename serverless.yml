@@ -22,8 +22,16 @@ frameworkVersion: "3"
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs14.x
+
+package:
+  exclude:
+    - .git/**
+    - src/**
+    - test/**
+    - nodemon.json
+    - README.md
 
 functions:
-  hello:
+  handler:
     handler: dist/handler.handler
