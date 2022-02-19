@@ -26,6 +26,14 @@ provider:
   stage: production
   memorySize: 128
 
+plugins:
+  - serverless-scriptable-plugin
+
+custom:
+  scriptable:
+    hooks:
+      before:functions:handler:handler: npm run build
+
 package:
   exclude:
     - .git/**
