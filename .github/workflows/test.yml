@@ -1,0 +1,28 @@
+name: test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: run tests
+        env:
+          DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+          NODE_DOCKER_PORT: ${{ secrets.TEST_NODE_DOCKER_PORT }}
+          MONGODB_USER: ${{ secrets.TEST_MONGODB_USER }}
+          MONGODB_PASSWORD: ${{ secrets.TEST_MONGODB_PASSWORD }}
+          MONGODB_LOCAL_PORT: ${{ secrets.TEST_MONGODB_LOCAL_PORT }}
+          NODE_LOCAL_PORT: ${{ secrets.TEST_NODE_LOCAL_PORT }}
+        run: |
+          make test-build
+          make test
