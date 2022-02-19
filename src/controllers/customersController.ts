@@ -44,7 +44,8 @@ export async function deleteCustomer(req: Request, res: Response) {
   res.sendStatus(httpStatus.OK);
 }
 export async function updateCustomer(req: Request, res: Response) {
-  const { id, updateContent } = req.params;
+  const { id } = req.params;
+  const updateContent = req.body;
   const validation = updateCustomerSchema.validate(updateContent);
   if (!isValidObjectId(id)) {
     throw new InvalidDataError("id", [
