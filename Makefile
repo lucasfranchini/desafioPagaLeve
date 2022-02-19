@@ -14,7 +14,7 @@ test_compose = docker-compose -f ./docker-compose.test.yml --env-file ./.env.tes
 
 .PRONY: test
 test: 
-	make test-build && $(test_compose) run voltz_test && make test-down
+	make test-build && $(test_compose) run pagaleve_test && make test-down
 .PRONY: test-build
 test-build: 
 	$(test_compose) build

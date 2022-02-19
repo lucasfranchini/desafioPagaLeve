@@ -32,7 +32,10 @@ describe("GET /customers", () => {
   it("should return an array containing the customer created", async () => {
     const customer = await createCustomerInDatabase();
     const res = await agent.get("/customers");
-    expect(res.body[0]).toMatchObject(customer);
+    expect({
+      ...res.body[0],
+      birthday: new Date(res.body[0].birthday),
+    }).toMatchObject(customer);
   });
 });
 
@@ -45,7 +48,14 @@ describe("POST /customers", () => {
   it("should return an onbject containing all the customer data for valid params", async () => {
     const customer = createCustomerObject();
     const res = await agent.post("/customers").send(customer);
-    expect(res.body).toMatchObject({ ...customer, id: expect.any(String) });
+    console.log(`${customer.birthday}`);
+    expect({
+      ...res.body,
+      birthday: new Date(res.body.birthday),
+    }).toMatchObject({
+      ...customer,
+      id: expect.any(String),
+    });
   });
 
   it("should return status 422 for invalid params", async () => {
