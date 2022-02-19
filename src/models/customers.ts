@@ -5,7 +5,7 @@ export interface CustomerInterface {
   lastName?: String;
   email: String;
   birthday: Date;
-  phone: String;
+  phone?: String;
 }
 
 const customerSchema = new mongoose.Schema(
@@ -13,8 +13,8 @@ const customerSchema = new mongoose.Schema(
     firstName: { type: String, required: true },
     lastName: { type: String },
     email: { type: String, required: true },
-    birthday: { type: Date, index: true },
-    phone: { type: String, index: true },
+    birthday: { type: Date, required: true },
+    phone: { type: String },
   },
   {
     toJSON: {
