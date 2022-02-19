@@ -26,6 +26,13 @@ const customerSchema = new mongoose.Schema(
     },
   }
 );
+customerSchema.index({
+  firstName: "text",
+  lastName: "text",
+  email: "text",
+  birthday: "text",
+  phone: "text",
+});
 export const Customers = mongoose.model<CustomerInterface>(
   "Customers",
   customerSchema
