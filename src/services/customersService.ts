@@ -38,7 +38,6 @@ export async function updateCustomer(
 }
 
 export async function searchCustomers(searchText: string) {
-  console.log(Customers.listIndexes());
   const customers = await Customers.find({ $text: { $search: searchText } });
   return customers;
 }
