@@ -24,6 +24,7 @@ provider:
   name: aws
   runtime: nodejs14.x
   stage: production
+  memorySize: 128
 
 package:
   exclude:
@@ -36,3 +37,12 @@ package:
 functions:
   handler:
     handler: dist/handler.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
