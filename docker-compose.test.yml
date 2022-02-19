@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  mongodb_test:
+    image: mongo:latest
+    container_name: mongo_test
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
+    ports:
+      - $MONGODB_LOCAL_PORT:27017
+    volumes:
+      - db:/data/db
+  pagaleve_test:
+    depends_on:
+      - mongodb_test
+    container_name: pagaleve_test
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    restart: unless-stopped
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    environment:
+      NODE_ENV: test
+volumes:
+  db:

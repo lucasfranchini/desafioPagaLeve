@@ -9,3 +9,15 @@ dev-detached:
 .PRONY: dev-down
 dev-down: 
 	$(dev_compose) down -v
+
+test_compose = docker-compose -f ./docker-compose.test.yml --env-file ./.env.test
+
+.PRONY: test
+test: 
+	make test-build && $(test_compose) run voltz_test && make test-down
+.PRONY: test-build
+test-build: 
+	$(test_compose) build
+.PRONY: test-down
+test-down: 
+	$(test_compose) down -v
