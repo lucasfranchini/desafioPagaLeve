@@ -36,7 +36,7 @@ custom:
 
 package:
   exclude:
-    - .git/**
+    - .github/**
     - src/**
     - tests/**
     - nodemon.json
