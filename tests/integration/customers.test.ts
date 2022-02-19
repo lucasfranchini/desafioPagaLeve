@@ -35,3 +35,23 @@ describe("GET /customers", () => {
     expect(res.body[0]).toMatchObject(customer);
   });
 });
+
+describe("POST /customers", () => {
+  it("should return status 201 for valid params", async () => {
+    const customer = createCustomerObject();
+    const res = await agent.post("/customers").send(customer);
+    expect(res.status).toBe(httpStatus.CREATED);
+  });
+  it("should return an onbject containing all the customer data for valid params", async () => {
+    const customer = createCustomerObject();
+    const res = await agent.post("/customers").send(customer);
+    expect(res.body).toMatchObject({ ...customer, id: expect.any(String) });
+  });
+
+  it("should return status 422 for invalid params", async () => {
+    const customer = createCustomerObject();
+    customer.email = "invalid";
+    const res = await agent.post("/customers").send(customer);
+    expect(res.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
+  });
+});
