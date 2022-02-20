@@ -6,15 +6,6 @@ on:
       - main
 
 jobs:
-  build:
-    name: build
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        node-version: [14.x]
-    steps:
-      - run: npm ci
-      - run: npm run build
   deploy:
     name: deploy
     runs-on: ubuntu-20.04
@@ -28,6 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+      - run: npm run build
       - name: serverless deploy
         uses: serverless/github-action@v3
         with:
