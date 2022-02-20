@@ -16,11 +16,9 @@ async function setup(event, context) {
   return serverlessExpressInstance(event, context);
 }
 
-function handler(event, context) {
+export function handler(event, context) {
   if (serverlessExpressInstance)
     return serverlessExpressInstance(event, context);
 
   return setup(event, context);
 }
-
-export default handler;
