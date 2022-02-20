@@ -1,22 +1,15 @@
 import serverlessExpress from "@vendia/serverless-express";
-import app from "@/app";
+import app, { init } from "@/app";
 
 let serverlessExpressInstance;
 
-function asyncTask() {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve("connected to database"), 1000);
-  });
-}
-
 async function setup(event, context) {
-  const asyncValue = await asyncTask();
-  console.log(asyncValue);
+  await init();
   serverlessExpressInstance = serverlessExpress({ app });
   return serverlessExpressInstance(event, context);
 }
 
-export function handler(event, context) {
+export async function handler(event, context) {
   if (serverlessExpressInstance)
     return serverlessExpressInstance(event, context);
 
