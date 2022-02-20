@@ -2,6 +2,9 @@
 
 An API made for pagaleve company challenge.
 
+If you want to test the API routes without dowloading the repository there's a deploy in: \
+https://nj2yn9u177.execute-api.us-east-1.amazonaws.com/production
+
 ## About
 
 This is an api with routes to get data from customers from a database, lots of people can view and manage new customers\
@@ -36,6 +39,7 @@ The following tools and frameworks were used in the construction of the project:
   <img style='margin: 5px;' src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white"/>
   <img style='margin: 5px;' src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/>
   <img style='margin: 5px;' src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white"/>
+  <img style='margin: 5px;' src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"/>
   
 </p>
 
