@@ -54,5 +54,3 @@ functions:
           path: /{proxy+}
           method: ANY
           cors: true
-    environment:
-      DATABASE_URL: mongodb+srv://voltzadmin:m4AKUN03UF6aRu2P@cluster0.f3coa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
