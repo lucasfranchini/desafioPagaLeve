@@ -1,4 +1,4 @@
-# voltz API
+# PagaLeve API
 
 An API made for pagaleve company challenge.
 
